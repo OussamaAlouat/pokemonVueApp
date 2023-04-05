@@ -7,14 +7,15 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export interface State {
-  pokemons: Pokemon [],
+  pokemons: Pokemon[],
 }
 export default new Vuex.Store({
   state: {
     pokemons: [],
   },
   mutations: {
-    ADD_POKEMON(state: State, pokemon: Pokemon): void{
+    ADD_POKEMON(state: State, pokemon: Pokemon): void {
+      pokemon.clicks = 0;
       state.pokemons.push(pokemon);
     },
   },
@@ -26,7 +27,6 @@ export default new Vuex.Store({
           console.log(elem, idOfPokemon[1]);
           pokemonApiService.getPokemonByName(elem.name).then((response) => {
             this.commit('ADD_POKEMON', response.data);
-            console.log(response.data);
           });
         });
       });
