@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
-    <div v-if="!clicked" @click="clicked=!clicked">
+  <div @click="clicked=!clicked">
+    <div class="card" v-if="!clicked">
       <span>{{ pokemon.name }}</span>
       <div class="image_box">
         <img :src="image" :alt="pokemon.name">
       </div>
     </div>
-    <div v-else>
+    <div v-else class="card">
       <p>name: {{ pokemon.name }}</p>
       <p>heigth: {{ pokemon.height }}</p>
       <p>weigth: {{ pokemon.weight }}</p>
@@ -43,11 +43,13 @@ export default class PokemonCard extends Vue {
 
 <style>
 .card {
+  min-width: 250px;
+  min-height: 250px;
   width: 100%;
-  min-width: 100px;
-  min-height: 100px;
   background: #FCE4CA;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .image_box {
@@ -59,7 +61,7 @@ img {
   padding: 0;
   display: block;
   margin: 0 auto;
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 80%;
+  max-width: 80%;
 }
 </style>
