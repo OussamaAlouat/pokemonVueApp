@@ -48,4 +48,10 @@ export default class PokemonList extends Vue {
   display: block;
   margin-left: 10px;
 }
+
+@media (max-width: 554px) {
+  .card_list {
+    margin-left: 0;
+  }
+}
 </style>
