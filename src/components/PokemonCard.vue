@@ -1,7 +1,7 @@
 <template>
   <div @click="clicked=!clicked">
     <div class="card" v-if="!clicked">
-      <span>{{ pokemon.name }}</span>
+      <div class="title">{{ pokemon.name }}</div>
       <div class="image_box">
         <img :src="image" :alt="pokemon.name">
       </div>
@@ -63,5 +63,12 @@ img {
   margin: 0 auto;
   max-height: 80%;
   max-width: 80%;
+}
+
+.title {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
