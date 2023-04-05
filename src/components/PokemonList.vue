@@ -1,15 +1,11 @@
 <template>
   <div class="container">
-    <pokemon-card v-for="poke of pokemos" :pokemon="poke" :key="poke.id"></pokemon-card>
+    <div class="card_list" v-for="poke of pokemos" :key="poke.id">
+      <pokemon-card :pokemon="poke"/>
+    </div>
   </div>
 </template>
-<style>
-.container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-</style>
+
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
@@ -37,3 +33,19 @@ export default class PokemonList extends Vue {
   }
 }
 </script>;
+
+<style>
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card_list{
+  max-width: 250px;
+  max-height: 250px;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: 10px;
+}
+</style>
