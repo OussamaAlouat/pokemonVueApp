@@ -10,6 +10,11 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: PokemonHome,
   },
+  {
+    path: '/detail/:id',
+    name: 'DetailView',
+    component: () => import('@/views/PokemonDetailView.vue'),
+  },
 ];
 
 const router = new VueRouter({
