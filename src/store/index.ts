@@ -8,14 +8,19 @@ Vue.use(Vuex);
 
 export interface State {
   pokemons: Pokemon[],
+  id: number | null,
 }
 export default new Vuex.Store({
   state: {
     pokemons: [],
+    id: null,
   },
   mutations: {
     ADD_POKEMON(state: State, pokemon: Pokemon): void {
       state.pokemons.push(pokemon);
+    },
+    SET_ID(state: State, id: number) {
+      state.id = id;
     },
   },
   actions: {
@@ -29,6 +34,15 @@ export default new Vuex.Store({
           });
         });
       });
+    },
+
+    setId({ commit }, id: number): void {
+      this.commit('SET_ID', id);
+    },
+  },
+  getters: {
+    getPokemonById(state: State): Pokemon {
+      return state.pokemons.find((poke) => poke.id === state.id)!;
     },
   },
   modules: {
