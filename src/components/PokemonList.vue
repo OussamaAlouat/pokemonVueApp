@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { Pokemon } from '@/models/Pokemon';
 import PokemonCard from './PokemonCard.vue';
@@ -29,7 +29,9 @@ export default class PokemonList extends Vue {
   pokemos!:Pokemon[];
 
   mounted(): void {
-    this.loadData();
+    if (this.pokemos.length === 0) {
+      this.loadData();
+    }
   }
 }
 </script>;
