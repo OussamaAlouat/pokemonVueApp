@@ -15,7 +15,6 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_POKEMON(state: State, pokemon: Pokemon): void {
-      pokemon.clicks = 0;
       state.pokemons.push(pokemon);
     },
   },
