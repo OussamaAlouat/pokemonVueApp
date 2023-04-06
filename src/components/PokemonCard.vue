@@ -40,12 +40,8 @@ export default class PokemonCard extends Vue {
     this.clicked = !this.clicked;
   }
 
-  mounted() {
-    console.log(this.pokemon);
-  }
-
   goToDetails() {
-    console.log(this);
+    this.$router.push(`/detail/${this.pokemon.id}`);
   }
 
   get image():string {
