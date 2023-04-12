@@ -2,6 +2,7 @@
   <div class="container">
     <div class="list-names">
       <li
+        class="name"
         v-for="poke of pokemonNames"
         :key="poke.name"
         @click="loadPokemon(poke.name)"
@@ -10,7 +11,7 @@
       </li>
     </div>
     <div class="detail-container">
-      <pokemon-basic-detail></pokemon-basic-detail>
+      <pokemon-basic-detail v-if="pokemon"></pokemon-basic-detail>
     </div>
   </div>
 </template>
@@ -32,6 +33,9 @@ export default class PokemonList extends Vue {
 
   @State('pokemonNames')
   pokemonNames!: Pokemon[];
+
+  @State('selectedPokemon')
+  pokemon!: Pokemon;
 
   mounted(): void {
     if (this.pokemonNames.length === 0) {
@@ -65,5 +69,11 @@ export default class PokemonList extends Vue {
 }
 .detail-container {
   width: 75%;
+  display: flex;
+  justify-content: center;
+}
+
+.name:hover {
+  cursor: pointer;
 }
 </style>
