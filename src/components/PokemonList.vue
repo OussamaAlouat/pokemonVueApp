@@ -14,7 +14,8 @@
       </li>
     </div>
     <div class="detail-container">
-      <pokemon-basic-detail v-if="pokemon"></pokemon-basic-detail>
+      <pokemon-basic-detail v-if="pokemon" />
+      <pokemon-not-selected v-else />
     </div>
   </div>
 </template>
@@ -24,10 +25,12 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { Pokemon } from '@/models/Pokemon';
 import PokemonBasicDetail from '@/components/PokemonBasicDetail.vue';
+import PokemonNotSelected from '@/components/PokemonNotSelected.vue';
 
 @Component({
   components: {
     PokemonBasicDetail,
+    PokemonNotSelected,
   },
 })
 export default class PokemonList extends Vue {
