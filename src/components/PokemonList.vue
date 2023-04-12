@@ -2,7 +2,10 @@
   <div class="container">
     <div class="list-names">
       <li
-        class="name"
+        :class="{
+          'name': true,
+          'selected': isSelected(poke.name)
+        }"
         v-for="poke of pokemonNames"
         :key="poke.name"
         @click="loadPokemon(poke.name)"
@@ -49,6 +52,14 @@ export default class PokemonList extends Vue {
   loadPokemon(name: string): void {
     this.getPokemonInformation(name);
   }
+
+  isSelected(name: string): boolean {
+    if (this.pokemon) {
+      return name === this.pokemon.name;
+    }
+
+    return false;
+  }
 }
 </script>;
 
@@ -75,5 +86,9 @@ export default class PokemonList extends Vue {
 
 .name:hover {
   cursor: pointer;
+}
+
+.selected {
+  color: red;
 }
 </style>
