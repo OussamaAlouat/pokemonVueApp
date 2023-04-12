@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { AxiosResponse } from 'axios';
-import { Pokemon } from '@/models/Pokemon';
+import { Pokemon, PokemonNames } from '@/models/Pokemon';
 import { Specie } from '@/models/Specie';
 import { pokemonApiService } from '@/services/api';
 
@@ -11,6 +11,8 @@ export interface State {
   pokemons: Pokemon[],
   id: number | null,
   specie: Specie | null,
+  selectedPokemon: Pokemon | undefined,
+  pokemonNames: PokemonNames[],
 }
 
 export default new Vuex.Store({
@@ -18,8 +20,13 @@ export default new Vuex.Store({
     pokemons: [],
     id: null,
     specie: null,
+    pokemonNames: [],
+    selectedPokemon: undefined,
   },
   mutations: {
+    SET_ALL_POKEMON_NAMES(state: State, pokemonList: PokemonNames[]) {
+      state.pokemonNames = pokemonList;
+    },
     ADD_POKEMON(state: State, pokemon: Pokemon): void {
       state.pokemons.push(pokemon);
     },
@@ -29,18 +36,27 @@ export default new Vuex.Store({
     SET_SPECIES_OF_SELECTED_POKEMON(state: State, specie: Specie) {
       state.specie = specie;
     },
+    SET_SELECTED_POKEMON(state: State, pokemon: Pokemon): void {
+      state.selectedPokemon = pokemon;
+    },
   },
   actions: {
     loadData(): void {
       pokemonApiService.getAllPokemons().then((res: AxiosResponse) => {
-        res.data.results.forEach((elem: { name: string, url: string }) => {
-          const idOfPokemon = elem.url.split('pokemon/');
-          console.log(elem, idOfPokemon[1]);
-          pokemonApiService.getPokemonByName(elem.name).then((response) => {
-            this.commit('ADD_POKEMON', response.data);
-          });
-        });
+        this.commit('SET_ALL_POKEMON_NAMES', res.data.results);
       });
+    },
+
+    getPokemonInformation({ commit, state }, name: string): void {
+      const finded = this.state.pokemons.find((poke) => poke.name === name);
+      if (finded) {
+        this.commit('SET_SELECTED_POKEMON', finded);
+      } else {
+        pokemonApiService.getPokemonByName(name).then((res: AxiosResponse) => {
+          this.commit('ADD_POKEMON', res.data);
+          this.commit('SET_SELECTED_POKEMON', res.data);
+        });
+      }
     },
 
     setId({ commit }, id: number): void {
