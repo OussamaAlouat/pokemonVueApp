@@ -11,7 +11,7 @@ export default class PokeApi {
     return axiosInstance.get(`/pokemon/${name}`);
   }
 
-  public getSpecies(specie: number): Promise<AxiosResponse> {
+  public getSpecies(specie: string): Promise<AxiosResponse> {
     return axiosInstance.get(`/pokemon-species/${specie}`);
   }
 }

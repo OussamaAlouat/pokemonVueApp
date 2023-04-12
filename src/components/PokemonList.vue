@@ -1,7 +1,21 @@
 <template>
   <div class="container">
-    <div class="card_list" v-for="poke of pokemos" :key="poke.id">
-      <pokemon-card :pokemon="poke"/>
+    <div class="list-names">
+      <li
+        :class="{
+          'name': true,
+          'selected': isSelected(poke.name)
+        }"
+        v-for="poke of pokemonNames"
+        :key="poke.name"
+        @click="loadPokemon(poke.name)"
+      >
+        {{ poke.name }}
+      </li>
+    </div>
+    <div class="detail-container">
+      <pokemon-basic-detail v-if="pokemon" />
+      <pokemon-not-selected v-else />
     </div>
   </div>
 </template>
@@ -10,28 +24,44 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { Pokemon } from '@/models/Pokemon';
-import PokemonCard from './PokemonCard.vue';
+import PokemonBasicDetail from '@/components/PokemonBasicDetail.vue';
+import PokemonNotSelected from '@/components/PokemonNotSelected.vue';
 
 @Component({
   components: {
-    PokemonCard,
+    PokemonBasicDetail,
+    PokemonNotSelected,
   },
 })
 export default class PokemonList extends Vue {
-  list: Pokemon[]= [] as Pokemon[];
-
-  poke: any;
-
   @Action('loadData')
   loadData!: () => void;
 
-  @State('pokemons')
-  pokemos!:Pokemon[];
+  @State('pokemonNames')
+  pokemonNames!: Pokemon[];
+
+  @State('selectedPokemon')
+  pokemon!: Pokemon;
 
   mounted(): void {
-    if (this.pokemos.length === 0) {
+    if (this.pokemonNames.length === 0) {
       this.loadData();
     }
+  }
+
+  @Action('getPokemonInformation')
+  getPokemonInformation!: (name: string) => void;
+
+  loadPokemon(name: string): void {
+    this.getPokemonInformation(name);
+  }
+
+  isSelected(name: string): boolean {
+    if (this.pokemon) {
+      return name === this.pokemon.name;
+    }
+
+    return false;
   }
 }
 </script>;
@@ -41,19 +71,27 @@ export default class PokemonList extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-}
-.card_list{
-  max-width: 250px;
-  max-height: 250px;
-  margin-bottom: 10px;
-  display: block;
-  margin-left: 10px;
 }
 
-@media (max-width: 554px) {
-  .card_list {
-    margin-left: 0;
-  }
+.list-names {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 25%;
+  list-style-type: none;
+  text-align: justify;
+}
+.detail-container {
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
+
+.name:hover {
+  cursor: pointer;
+}
+
+.selected {
+  color: red;
 }
 </style>
