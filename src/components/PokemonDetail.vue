@@ -52,10 +52,6 @@ export default class PokemonDetail extends Vue {
     this.pokemon = this.getPokemonById;
   }
 
-  mounted() {
-    console.log(this.specie);
-  }
-
   get image():string {
     if (this.pokemon) {
       return this.pokemon.sprites.other?.home.front_default || '';
