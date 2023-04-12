@@ -3,6 +3,12 @@
 // eslint-disable-next-file no-use-before-define
 // eslint-disable-next-file  @typescript-eslint/no-explicit-any
 
+
+export interface PokemonNames {
+  name: string,
+  url: string,
+}
+
 export interface Species {
   name: string;
   url: string;
