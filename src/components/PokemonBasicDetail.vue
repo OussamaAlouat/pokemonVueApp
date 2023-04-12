@@ -54,10 +54,10 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: end;
-  text-align: justify;
+  text-align: initial;
 }
 
-@media (max-width: 554px) {
+@media (max-width: 720px) {
   .basic-container {
     display: flex;
     flex-direction: column;
@@ -65,6 +65,18 @@ img {
 
   .text-container {
     text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  img {
+    width: 200px;
+  }
+}
+
+@media (min-width: 600) and (max-width: 700px) {
+  img {
+    width: 250px;
   }
 }
 
