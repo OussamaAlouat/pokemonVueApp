@@ -12,8 +12,8 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Action, Getter, State } from 'vuex-class';
+import { Component, Vue } from 'vue-property-decorator';
+import { Action, State } from 'vuex-class';
 
 import { Pokemon } from '@/models/Pokemon';
 
@@ -26,6 +26,7 @@ export default class PokemonBasicDetail extends Vue {
   addClick!: (id: number) => void;
 
   get image():string {
+    console.log(this.pokemon);
     if (this.pokemon) {
       return this.pokemon.sprites.other?.home.front_default || '';
     }
@@ -40,6 +41,13 @@ export default class PokemonBasicDetail extends Vue {
 </script>
 
 <style scoped>
+button {
+  background: aliceblue;
+  border: none;
+  border-radius: 10px;
+  height: 30px;
+}
+
 img {
   width: inherit;
   max-width: 350px;
