@@ -1,19 +1,23 @@
-import { Pokemon } from '@/models/Pokemon';
-import { pokemonApiService } from '@/services/api';
-import { AxiosResponse } from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { AxiosResponse } from 'axios';
+import { Pokemon } from '@/models/Pokemon';
+import { Specie } from '@/models/Specie';
+import { pokemonApiService } from '@/services/api';
 
 Vue.use(Vuex);
 
 export interface State {
   pokemons: Pokemon[],
   id: number | null,
+  specie: Specie | null,
 }
+
 export default new Vuex.Store({
   state: {
     pokemons: [],
     id: null,
+    specie: null,
   },
   mutations: {
     ADD_POKEMON(state: State, pokemon: Pokemon): void {
@@ -21,6 +25,9 @@ export default new Vuex.Store({
     },
     SET_ID(state: State, id: number) {
       state.id = id;
+    },
+    SET_SPECIES_OF_SELECTED_POKEMON(state: State, specie: Specie) {
+      state.specie = specie;
     },
   },
   actions: {
@@ -38,6 +45,16 @@ export default new Vuex.Store({
 
     setId({ commit }, id: number): void {
       this.commit('SET_ID', id);
+      this.dispatch('obteinTheSpecieOfSelectedPokemon');
+    },
+
+    obteinTheSpecieOfSelectedPokemon(): void {
+      const poke = this.getters.getPokemonById;
+      const specie = poke.species.name;
+      console.log(specie, poke);
+      pokemonApiService.getSpecies(specie).then((response: AxiosResponse) => {
+        this.commit('SET_SPECIES_OF_SELECTED_POKEMON', response.data);
+      });
     },
   },
   getters: {
