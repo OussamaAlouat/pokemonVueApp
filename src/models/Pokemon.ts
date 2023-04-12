@@ -170,6 +170,7 @@ export interface GenerationVii {
 }
 
 export interface Pokemon {
+  clicks: number;
   abilities: Ability[];
   base_experience: number;
   forms: Species[];

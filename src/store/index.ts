@@ -39,6 +39,11 @@ export default new Vuex.Store({
     SET_SELECTED_POKEMON(state: State, pokemon: Pokemon): void {
       state.selectedPokemon = pokemon;
     },
+    INCRESED_CLICK(state: State): void {
+      if (state.selectedPokemon !== undefined && state.selectedPokemon.id) {
+        state.selectedPokemon.clicks += 1;
+      }
+    },
   },
   actions: {
     loadData(): void {
@@ -53,8 +58,12 @@ export default new Vuex.Store({
         this.commit('SET_SELECTED_POKEMON', finded);
       } else {
         pokemonApiService.getPokemonByName(name).then((res: AxiosResponse) => {
-          this.commit('ADD_POKEMON', res.data);
-          this.commit('SET_SELECTED_POKEMON', res.data);
+          const pokemon = {
+            ...res.data,
+            clicks: 0,
+          };
+          this.commit('ADD_POKEMON', pokemon);
+          this.commit('SET_SELECTED_POKEMON', pokemon);
         });
       }
     },
@@ -67,10 +76,13 @@ export default new Vuex.Store({
     obteinTheSpecieOfSelectedPokemon(): void {
       const poke = this.getters.getPokemonById;
       const specie = poke.species.name;
-      console.log(specie, poke);
       pokemonApiService.getSpecies(specie).then((response: AxiosResponse) => {
         this.commit('SET_SPECIES_OF_SELECTED_POKEMON', response.data);
       });
+    },
+
+    addClick({ commit }, id: number) {
+      this.commit('INCRESED_CLICK');
     },
   },
   getters: {
