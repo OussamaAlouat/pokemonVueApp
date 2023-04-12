@@ -1,17 +1,22 @@
 <template>
   <div>
-    Pokemon detail component
     <div v-if="specie">
       <div>
         <img :src="image" :alt="pokemon.name">
       </div>
-      <div>
+      <div class="mb-10">
         <h2>Specie</h2>
-        <div class="specie_container">
+        <div class="description_container">
           <span>Base of happiness: {{ specie.base_happiness }}</span>
           <span>Capture Rate: {{ specie.capture_rate }}</span>
           <span>Color: {{ specie.color.name }}</span>
           <span>Habitat: {{ specie.habitat.name }}</span>
+        </div>
+        <h2>Habilidades</h2>
+        <div class="description_container">
+          <span v-for="ablity of pokemon.abilities" :key="ablity.ability.url">
+            {{ ablity.ability.name }}
+          </span>
         </div>
       </div>
     </div>
@@ -66,17 +71,21 @@ img {
   width: inherit;
   max-width: 400px;
 }
-.specie_container {
+.description_container {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
 @media (max-width: 554px) {
-  .specie_container {
+  .description_container {
     justify-content: center;
     align-items: center;
     flex-direction: column;
   }
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
 </style>
