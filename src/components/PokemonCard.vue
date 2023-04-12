@@ -47,10 +47,6 @@ export default class PokemonCard extends Vue {
   get image():string {
     return this.pokemon.sprites.other?.home.front_default || '';
   }
-
-  get abilities(): any {
-    return this.pokemon.abilities;
-  }
 }
 </script>
 
