@@ -1,7 +1,16 @@
 <template>
   <div class="container">
-    <div class="card_list" v-for="poke of pokemos" :key="poke.id">
-      <pokemon-card :pokemon="poke"/>
+    <div class="list-names">
+      <li
+        v-for="poke of pokemonNames"
+        :key="poke.name"
+        @click="loadPokemon(poke.name)"
+      >
+        {{ poke.name }}
+      </li>
+    </div>
+    <div class="detail-container">
+      <pokemon-basic-detail></pokemon-basic-detail>
     </div>
   </div>
 </template>
@@ -10,28 +19,31 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { Pokemon } from '@/models/Pokemon';
-import PokemonCard from './PokemonCard.vue';
+import PokemonBasicDetail from '@/components/PokemonBasicDetail.vue';
 
 @Component({
   components: {
-    PokemonCard,
+    PokemonBasicDetail,
   },
 })
 export default class PokemonList extends Vue {
-  list: Pokemon[]= [] as Pokemon[];
-
-  poke: any;
-
   @Action('loadData')
   loadData!: () => void;
 
-  @State('pokemons')
-  pokemos!:Pokemon[];
+  @State('pokemonNames')
+  pokemonNames!: Pokemon[];
 
   mounted(): void {
-    if (this.pokemos.length === 0) {
+    if (this.pokemonNames.length === 0) {
       this.loadData();
     }
+  }
+
+  @Action('getPokemonInformation')
+  getPokemonInformation!: (name: string) => void;
+
+  loadPokemon(name: string): void {
+    this.getPokemonInformation(name);
   }
 }
 </script>;
@@ -41,19 +53,17 @@ export default class PokemonList extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-}
-.card_list{
-  max-width: 250px;
-  max-height: 250px;
-  margin-bottom: 10px;
-  display: block;
-  margin-left: 10px;
 }
 
-@media (max-width: 554px) {
-  .card_list {
-    margin-left: 0;
-  }
+.list-names {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 25%;
+  list-style-type: none;
+  text-align: justify;
+}
+.detail-container {
+  width: 75%;
 }
 </style>
