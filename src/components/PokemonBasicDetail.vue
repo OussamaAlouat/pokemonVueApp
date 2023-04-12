@@ -1,12 +1,12 @@
 <template>
   <div class="basic-container">
-    <img :src="image" :alt="pokemon.name">
+    <img :src="image" :alt="pokemon.name" @click="addClick(pokemon.id)">
     <div class="text-container">
       <span>name: {{ pokemon.name }}</span>
       <span>heigth: {{ pokemon.height }}</span>
       <span>weigth: {{ pokemon.weight }}</span>
       <span>Base of experience:  {{ pokemon.base_experience }}</span>
-      <span>Number of clicks: {{ clicks }}</span>
+      <span>Number of clicks: {{ pokemon.clicks }}</span>
     </div>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default class PokemonBasicDetail extends Vue {
   @State('selectedPokemon')
   pokemon!: Pokemon;
 
+  @Action('addClick')
+  addClick!: (id: number) => void;
+
   get image():string {
     if (this.pokemon) {
       return this.pokemon.sprites.other?.home.front_default || '';
@@ -34,7 +37,7 @@ export default class PokemonBasicDetail extends Vue {
 <style scoped>
 img {
   width: inherit;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .basic-container {
@@ -52,6 +55,10 @@ img {
   .basic-container {
     display: flex;
     flex-direction: column;
+  }
+
+  .text-container {
+    text-align: center;
   }
 }
 </style>
