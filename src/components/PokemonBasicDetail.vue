@@ -2,11 +2,12 @@
   <div class="basic-container">
     <img :src="image" :alt="pokemon.name" @click="addClick(pokemon.id)">
     <div class="text-container">
-      <span>name: {{ pokemon.name }}</span>
-      <span>heigth: {{ pokemon.height }}</span>
-      <span>weigth: {{ pokemon.weight }}</span>
+      <span>Name: {{ pokemon.name }}</span>
+      <span>Heigth: {{ pokemon.height }}</span>
+      <span>Weigth: {{ pokemon.weight }}</span>
       <span>Base of experience:  {{ pokemon.base_experience }}</span>
       <span>Number of clicks: {{ pokemon.clicks }}</span>
+      <button class="mt-10" @click="goToDetails()">More info</button>
     </div>
   </div>
 </template>
@@ -31,6 +32,10 @@ export default class PokemonBasicDetail extends Vue {
 
     return '';
   }
+
+  goToDetails() {
+    this.$router.push(`/detail/${this.pokemon.id}`);
+  }
 }
 </script>
 
@@ -38,6 +43,7 @@ export default class PokemonBasicDetail extends Vue {
 img {
   width: inherit;
   max-width: 350px;
+  cursor: pointer;
 }
 
 .basic-container {
@@ -60,5 +66,9 @@ img {
   .text-container {
     text-align: center;
   }
+}
+
+.mt-10 {
+  margin-top: 10px;
 }
 </style>
